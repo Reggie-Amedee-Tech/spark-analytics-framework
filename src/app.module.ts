@@ -2,15 +2,17 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AnalyticsModule } from './analytics/analytics.module';
-import { EmailModule } from './email/email.module';
+import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     AnalyticsModule,
-    EmailModule,
-    ConfigModule.forRoot(),
+    AuthModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     MongooseModule.forRootAsync({
       useFactory: async () => ({
         uri: process.env.MONGO_URI,

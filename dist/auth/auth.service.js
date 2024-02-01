@@ -9,29 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EmailService = void 0;
-const mailer_1 = require("@nestjs-modules/mailer");
+exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
-let EmailService = class EmailService {
-    constructor(mailerService) {
-        this.mailerService = mailerService;
+const email_service_1 = require("./../email/email.service");
+let AuthService = class AuthService {
+    constructor(emailService) {
+        this.emailService = emailService;
     }
-    async sendUserWelcome(user, token) {
-        const confirmation_url = `example.com/auth/confirm?token=${token}`;
-        await this.mailerService.sendMail({
-            to: user.email,
-            subject: 'Welcome to Spark! Confirm your Email',
-            template: './welcome',
-            context: {
-                name: user.name,
-                confirmation_url,
-            },
-        });
+    async signUp(user) {
+        const token = Math.floor(1000 + Math.random() * 9000).toString();
+        await this.emailService.sendUserWelcome(user, token);
     }
 };
-exports.EmailService = EmailService;
-exports.EmailService = EmailService = __decorate([
+exports.AuthService = AuthService;
+exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [mailer_1.MailerService])
-], EmailService);
-//# sourceMappingURL=email.service.js.map
+    __metadata("design:paramtypes", [email_service_1.EmailService])
+], AuthService);
+//# sourceMappingURL=auth.service.js.map

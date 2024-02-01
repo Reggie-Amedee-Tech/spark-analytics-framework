@@ -11,7 +11,7 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const analytics_module_1 = require("./analytics/analytics.module");
-const email_module_1 = require("./email/email.module");
+const auth_module_1 = require("./auth/auth.module");
 const mongoose_1 = require("@nestjs/mongoose");
 const config_1 = require("@nestjs/config");
 let AppModule = class AppModule {
@@ -21,8 +21,10 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             analytics_module_1.AnalyticsModule,
-            email_module_1.EmailModule,
-            config_1.ConfigModule.forRoot(),
+            auth_module_1.AuthModule,
+            config_1.ConfigModule.forRoot({
+                isGlobal: true,
+            }),
             mongoose_1.MongooseModule.forRootAsync({
                 useFactory: async () => ({
                     uri: process.env.MONGO_URI,
